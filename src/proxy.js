@@ -24,7 +24,11 @@ function redirectTo(request, path) {
   const forwardedProto = request.headers.get('x-forwarded-proto');
 
   if (forwardedHost) {
-    url.host = forwardedHost.split(',')[0].trim();
+    // `url.host = 'domen'` portni saqlab qoladi, shuning uchun alohida yoziladi.
+    const [hostname, port = ''] = forwardedHost.split(',')[0].trim().split(':');
+
+    url.hostname = hostname;
+    url.port = port;
   }
 
   if (forwardedProto) {
