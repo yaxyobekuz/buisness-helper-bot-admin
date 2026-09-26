@@ -2,6 +2,20 @@ import { NextResponse } from 'next/server';
 
 import { TOKEN_COOKIE } from '@/lib/constants';
 
+/**
+ * Nisbiy yo'naltirish.
+ *
+ * `new URL(path, request.url)` ishlatilmaydi: reverse proxy (nginx) orqasida
+ * `request.url` ichki manzilni beradi (masalan http://localhost:5824) va
+ * brauzer o'sha manzilga ketib qoladi. Nisbiy `Location` sarlavhasi esa
+ * brauzer tomonidan joriy domenga nisbatan hal qilinadi.
+ *
+ * @param {string} path
+ */
+function redirectTo(path) {
+  return new NextResponse(null, { status: 307, headers: { location: path } });
+}
+
 export default function proxy(request) {
   const token = request.cookies.get(TOKEN_COOKIE)?.value;
   const { pathname } = request.nextUrl;
@@ -14,11 +28,11 @@ export default function proxy(request) {
   }
 
   if (!token && !isLoginPage) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    return redirectTo('/login');
   }
 
   if (token && isLoginPage) {
-    return NextResponse.redirect(new URL('/', request.url));
+    return redirectTo('/');
   }
 
   return NextResponse.next();
