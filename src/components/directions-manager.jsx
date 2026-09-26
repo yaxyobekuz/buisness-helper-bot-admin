@@ -39,7 +39,7 @@ function EditDialog({ direction, onClose }) {
   return (
     <Modal open={Boolean(direction)} onClose={onClose} title="Yo'nalishni tahrirlash">
       {direction ? (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form key={direction._id} onSubmit={handleSubmit} className="space-y-4">
           <input type="hidden" name="id" value={direction._id} />
 
           <div>
