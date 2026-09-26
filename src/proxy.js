@@ -3,17 +3,35 @@ import { NextResponse } from 'next/server';
 import { TOKEN_COOKIE } from '@/lib/constants';
 
 /**
- * Nisbiy yo'naltirish.
+ * Yo'naltirish manzilini quradi.
  *
- * `new URL(path, request.url)` ishlatilmaydi: reverse proxy (nginx) orqasida
- * `request.url` ichki manzilni beradi (masalan http://localhost:5824) va
- * brauzer o'sha manzilga ketib qoladi. Nisbiy `Location` sarlavhasi esa
- * brauzer tomonidan joriy domenga nisbatan hal qilinadi.
+ * Next proxy qatlami `Location` ni absolyut ko'rinishda talab qiladi, lekin
+ * reverse proxy (nginx) orqasida `request.url` ichki manzilni beradi
+ * (masalan http://localhost:5824). Shuning uchun avval `X-Forwarded-Host` va
+ * `X-Forwarded-Proto` sarlavhalariga qaraymiz — nginx ularni uzatsa, brauzer
+ * ko'rgan haqiqiy domen o'shalarda bo'ladi.
  *
+ * @param {import('next/server').NextRequest} request
  * @param {string} path
  */
-function redirectTo(path) {
-  return new NextResponse(null, { status: 307, headers: { location: path } });
+function redirectTo(request, path) {
+  const url = request.nextUrl.clone();
+
+  url.pathname = path;
+  url.search = '';
+
+  const forwardedHost = request.headers.get('x-forwarded-host');
+  const forwardedProto = request.headers.get('x-forwarded-proto');
+
+  if (forwardedHost) {
+    url.host = forwardedHost.split(',')[0].trim();
+  }
+
+  if (forwardedProto) {
+    url.protocol = `${forwardedProto.split(',')[0].trim()}:`;
+  }
+
+  return NextResponse.redirect(url);
 }
 
 export default function proxy(request) {
@@ -28,11 +46,11 @@ export default function proxy(request) {
   }
 
   if (!token && !isLoginPage) {
-    return redirectTo('/login');
+    return redirectTo(request, '/login');
   }
 
   if (token && isLoginPage) {
-    return redirectTo('/');
+    return redirectTo(request, '/');
   }
 
   return NextResponse.next();
