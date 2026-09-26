@@ -1,22 +1,9 @@
-import { redirect } from 'next/navigation';
-
 import { logoutAction } from '@/app/actions/auth';
 import { Sidebar } from '@/components/sidebar';
-import { ApiRequestError, apiFetch } from '@/lib/api';
+import { apiFetchPage } from '@/lib/api';
 
 export default async function PanelLayout({ children }) {
-  let admin = null;
-
-  try {
-    const data = await apiFetch('/auth/me');
-    admin = data.admin;
-  } catch (error) {
-    if (error instanceof ApiRequestError && error.status === 401) {
-      redirect('/login');
-    }
-
-    throw error;
-  }
+  const { admin } = await apiFetchPage('/auth/me');
 
   return (
     <div className="min-h-screen">

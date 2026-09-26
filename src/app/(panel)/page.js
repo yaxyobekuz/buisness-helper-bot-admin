@@ -5,13 +5,13 @@ import { EmptyState } from '@/components/empty-state';
 import { PageHeader } from '@/components/page-header';
 import { StatCard } from '@/components/stat-card';
 import { StatusBadge } from '@/components/status-badge';
-import { apiFetch } from '@/lib/api';
+import { apiFetchPage } from '@/lib/api';
 import { formatDateTime } from '@/lib/format';
 
 export const metadata = { title: 'Bosh sahifa' };
 
 export default async function DashboardPage() {
-  const stats = await apiFetch('/stats/overview');
+  const stats = await apiFetchPage('/stats/overview');
 
   return (
     <>

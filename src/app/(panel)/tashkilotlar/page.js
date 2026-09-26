@@ -6,7 +6,7 @@ import { FilterTabs } from '@/components/filter-tabs';
 import { PageHeader } from '@/components/page-header';
 import { Pagination } from '@/components/pagination';
 import { SearchField } from '@/components/search-field';
-import { apiFetch } from '@/lib/api';
+import { apiFetchPage } from '@/lib/api';
 import { ACTIVITY_TYPES } from '@/lib/constants';
 import { formatDate, formatPhone } from '@/lib/format';
 
@@ -20,7 +20,7 @@ export default async function OrganizationsPage({ searchParams }) {
   if (params.search) query.set('search', params.search);
   query.set('page', params.page ?? '1');
 
-  const data = await apiFetch(`/organizations?${query.toString()}`);
+  const data = await apiFetchPage(`/organizations?${query.toString()}`);
 
   return (
     <>

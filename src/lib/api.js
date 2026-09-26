@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 import { TOKEN_COOKIE } from './constants';
 
@@ -53,4 +54,27 @@ export async function apiFetch(path, options = {}) {
   }
 
   return payload;
+}
+
+/**
+ * Sahifalar va layout uchun. Token yaroqsiz bo'lsa (401) — sessiyani
+ * tozalaydigan manzilga yo'naltiradi, shunda foydalanuvchi xato sahifasi
+ * o'rniga kirish oynasiga tushadi.
+ *
+ * Server action larda ishlatilmaydi: u yerda `apiFetch` ning o'zi chaqirilib,
+ * xato foydalanuvchiga xabar sifatida qaytariladi.
+ *
+ * @param {string} path
+ * @param {Parameters<typeof apiFetch>[1]} [options]
+ */
+export async function apiFetchPage(path, options) {
+  try {
+    return await apiFetch(path, options);
+  } catch (error) {
+    if (error instanceof ApiRequestError && error.status === 401) {
+      redirect('/chiqish');
+    }
+
+    throw error;
+  }
 }

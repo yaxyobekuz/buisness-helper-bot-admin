@@ -6,7 +6,7 @@ import { Icon } from '@/components/icons';
 import { PageHeader } from '@/components/page-header';
 import { StatusBadge } from '@/components/status-badge';
 import { StatusForm } from '@/components/status-form';
-import { ApiRequestError, apiFetch } from '@/lib/api';
+import { ApiRequestError, apiFetchPage } from '@/lib/api';
 import { formatBytes, formatDateTime, formatPhone } from '@/lib/format';
 
 export async function generateMetadata({ params }) {
@@ -21,7 +21,7 @@ export default async function ApplicationDetailPage({ params }) {
   let data;
 
   try {
-    data = await apiFetch(`/applications/${id}`);
+    data = await apiFetchPage(`/applications/${id}`);
   } catch (error) {
     if (error instanceof ApiRequestError && (error.status === 404 || error.status === 400)) {
       notFound();

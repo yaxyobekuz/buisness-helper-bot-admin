@@ -4,7 +4,14 @@ import { TOKEN_COOKIE } from '@/lib/constants';
 
 export default function proxy(request) {
   const token = request.cookies.get(TOKEN_COOKIE)?.value;
-  const isLoginPage = request.nextUrl.pathname === '/login';
+  const { pathname } = request.nextUrl;
+  const isLoginPage = pathname === '/login';
+
+  // Sessiyani tozalash manzili har doim o'tkaziladi, aks holda yaroqsiz
+  // cookie bilan /login <-> / o'rtasida cheksiz aylanish yuzaga keladi.
+  if (pathname === '/chiqish') {
+    return NextResponse.next();
+  }
 
   if (!token && !isLoginPage) {
     return NextResponse.redirect(new URL('/login', request.url));

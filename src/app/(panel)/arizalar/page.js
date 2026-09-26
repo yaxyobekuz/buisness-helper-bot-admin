@@ -7,7 +7,7 @@ import { PageHeader } from '@/components/page-header';
 import { Pagination } from '@/components/pagination';
 import { SearchField } from '@/components/search-field';
 import { StatusBadge } from '@/components/status-badge';
-import { apiFetch } from '@/lib/api';
+import { apiFetchPage } from '@/lib/api';
 import { APPLICATION_STATUSES } from '@/lib/constants';
 import { formatDateTime } from '@/lib/format';
 
@@ -21,7 +21,7 @@ export default async function ApplicationsPage({ searchParams }) {
   if (params.search) query.set('search', params.search);
   query.set('page', params.page ?? '1');
 
-  const data = await apiFetch(`/applications?${query.toString()}`);
+  const data = await apiFetchPage(`/applications?${query.toString()}`);
 
   return (
     <>

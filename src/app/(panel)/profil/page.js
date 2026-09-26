@@ -1,12 +1,12 @@
 import { AccountForm } from '@/components/account-form';
 import { PageHeader } from '@/components/page-header';
 import { PasswordForm } from '@/components/password-form';
-import { apiFetch } from '@/lib/api';
+import { apiFetchPage } from '@/lib/api';
 
 export const metadata = { title: 'Profil' };
 
 export default async function ProfilePage() {
-  const data = await apiFetch('/auth/me');
+  const data = await apiFetchPage('/auth/me');
 
   return (
     <>

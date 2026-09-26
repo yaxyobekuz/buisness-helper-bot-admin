@@ -5,14 +5,14 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import { EmptyState } from '@/components/empty-state';
 import { PageHeader } from '@/components/page-header';
 import { StatusBadge } from '@/components/status-badge';
-import { ApiRequestError, apiFetch } from '@/lib/api';
+import { ApiRequestError, apiFetchPage } from '@/lib/api';
 import { formatDate, formatDateTime, formatPhone } from '@/lib/format';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
 
   try {
-    const data = await apiFetch(`/organizations/${id}`);
+    const data = await apiFetchPage(`/organizations/${id}`);
 
     return { title: data.item.organizationName ?? 'Tashkilot' };
   } catch {
@@ -26,7 +26,7 @@ export default async function OrganizationDetailPage({ params }) {
   let data;
 
   try {
-    data = await apiFetch(`/organizations/${id}`);
+    data = await apiFetchPage(`/organizations/${id}`);
   } catch (error) {
     if (error instanceof ApiRequestError && (error.status === 404 || error.status === 400)) {
       notFound();

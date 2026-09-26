@@ -5,7 +5,11 @@ import { revalidatePath } from 'next/cache';
 import { ApiRequestError, apiFetch } from '@/lib/api';
 
 function toMessage(error) {
-  return error instanceof ApiRequestError ? error.message : 'Xatolik yuz berdi';
+  if (error instanceof ApiRequestError) {
+    return error.status === 401 ? 'Sessiya tugagan. Qaytadan kiring.' : error.message;
+  }
+
+  return 'Xatolik yuz berdi';
 }
 
 export async function updateApplicationStatusAction(prevState, formData) {
