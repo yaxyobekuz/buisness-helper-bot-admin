@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import { deleteEntrepreneurAction, restoreEntrepreneurAction } from '@/app/actions/data';
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { DeleteActions } from '@/components/delete-actions';
+import { DeletedBanner } from '@/components/deleted-banner';
 import { EmptyState } from '@/components/empty-state';
 import { PageHeader } from '@/components/page-header';
 import { StatusBadge } from '@/components/status-badge';
@@ -51,7 +54,18 @@ export default async function EntrepreneurDetailPage({ params }) {
         items={[{ label: 'Tadbirkorlar', href: '/tadbirkorlar' }, { label: displayName(entrepreneur) }]}
       />
 
-      <PageHeader title={displayName(entrepreneur)} />
+      <DeletedBanner deletedAt={entrepreneur.deletedAt} text="Bu tadbirkor o'chirilgan:" />
+
+      <PageHeader title={displayName(entrepreneur)}>
+        <DeleteActions
+          id={entrepreneur._id}
+          deleted={Boolean(entrepreneur.deletedAt)}
+          title="Tadbirkorni o'chirish"
+          warning={`${displayName(entrepreneur)} va uning ${data.applications.length} ta arizasi ro'yxatlardan yashiriladi. Keyin tiklash mumkin. Tadbirkor botga qayta murojaat qilsa avtomatik tiklanadi.`}
+          onDelete={deleteEntrepreneurAction}
+          onRestore={restoreEntrepreneurAction}
+        />
+      </PageHeader>
 
       <div className="grid gap-4 lg:grid-cols-3">
         <section className="card p-5">

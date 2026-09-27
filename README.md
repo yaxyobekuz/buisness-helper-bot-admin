@@ -27,10 +27,10 @@ Ularni **Profil** sahifasidan o'zgartirish mumkin.
 | --- | --- |
 | `/login` | Kirish |
 | `/` | Bosh sahifa — statistika, grafik, so'nggi arizalar |
-| `/arizalar` | Arizalar ro'yxati — holat filtri, qidiruv, sahifalash |
-| `/arizalar/[id]` | Ariza tafsiloti — tadbirkor, holatni o'zgartirish |
+| `/arizalar` | Arizalar ro'yxati — holat filtri, qidiruv, sahifalash, o'chirilganlar |
+| `/arizalar/[id]` | Ariza tafsiloti — tadbirkor, holat, o'chirish / tiklash |
 | `/tadbirkorlar` | Tadbirkorlar ro'yxati — qidiruv (faqat ko'rish) |
-| `/tadbirkorlar/[id]` | Tadbirkor ma'lumotlari va uning arizalari |
+| `/tadbirkorlar/[id]` | Tadbirkor ma'lumotlari, arizalari, o'chirish / tiklash |
 | `/profil` | Login, F.I.Sh. va parolni o'zgartirish |
 
 Ichki sahifalarning barchasida breadcrumb bor.
@@ -66,3 +66,10 @@ Logotip: `public/logo.svg`. **Hozir vaqtinchalik belgi turibdi** —
 prokuratura gerbini shu faylga (yoki `logo.png` qilib) qo'ying. Boshqa
 formatdan foydalansangiz `src/components/sidebar.jsx` va
 `src/components/login-form.jsx` dagi `/logo.svg` yo'lini almashtiring.
+
+## O'chirish
+
+Arizalar va tadbirkorlar butunlay o'chirilmaydi — "Faol / O'chirilgan"
+almashtirgichi orqali o'chirilganlarni ko'rish va tiklash mumkin.
+Tadbirkor o'chirilsa arizalari ham yashiriladi; tiklanganda birga qaytadi.
+Batafsil qoidalar server README sida.

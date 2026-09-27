@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import { deleteApplicationAction, restoreApplicationAction } from '@/app/actions/data';
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { DeleteActions } from '@/components/delete-actions';
+import { DeletedBanner } from '@/components/deleted-banner';
 import { PageHeader } from '@/components/page-header';
 import { StatusBadge } from '@/components/status-badge';
 import { StatusForm } from '@/components/status-form';
@@ -36,8 +39,18 @@ export default async function ApplicationDetailPage({ params }) {
     <>
       <Breadcrumbs items={[{ label: 'Arizalar', href: '/arizalar' }, { label: `Ariza #${application.number}` }]} />
 
+      <DeletedBanner deletedAt={application.deletedAt} text="Bu ariza o'chirilgan:" />
+
       <PageHeader title={`Ariza #${application.number}`}>
         <StatusBadge status={application.status} />
+        <DeleteActions
+          id={application._id}
+          deleted={Boolean(application.deletedAt)}
+          title="Arizani o'chirish"
+          warning={`#${application.number} ariza ro'yxatlardan yashiriladi va statistikaga kirmaydi. Keyin tiklash mumkin.`}
+          onDelete={deleteApplicationAction}
+          onRestore={restoreApplicationAction}
+        />
       </PageHeader>
 
       <div className="grid gap-4 lg:grid-cols-3">

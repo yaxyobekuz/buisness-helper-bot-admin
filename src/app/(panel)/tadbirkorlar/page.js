@@ -5,6 +5,7 @@ import { EmptyState } from '@/components/empty-state';
 import { PageHeader } from '@/components/page-header';
 import { Pagination } from '@/components/pagination';
 import { SearchField } from '@/components/search-field';
+import { ViewToggle } from '@/components/view-toggle';
 import { apiFetchPage } from '@/lib/api';
 import { formatDate, formatPhone } from '@/lib/format';
 
@@ -14,6 +15,7 @@ export default async function EntrepreneursPage({ searchParams }) {
   const params = await searchParams;
   const query = new URLSearchParams();
 
+  if (params.deleted === '1') query.set('deleted', '1');
   if (params.search) query.set('search', params.search);
   query.set('page', params.page ?? '1');
 
@@ -23,15 +25,20 @@ export default async function EntrepreneursPage({ searchParams }) {
     <>
       <PageHeader title="Tadbirkorlar" />
 
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <ViewToggle />
         <SearchField placeholder="F.I.Sh., username, telefon..." />
       </div>
 
       <div className="card overflow-hidden">
         {data.items.length === 0 ? (
           <EmptyState
-            title="Tadbirkor topilmadi"
-            description="Botga /start bosgan foydalanuvchilar shu yerda ko'rinadi."
+            title={params.deleted === '1' ? "O'chirilgan tadbirkor yo'q" : 'Tadbirkor topilmadi'}
+            description={
+              params.deleted === '1'
+                ? "O'chirilgan tadbirkorlar shu yerda turadi va tiklanishi mumkin."
+                : "Botga /start bosgan foydalanuvchilar shu yerda ko'rinadi."
+            }
             icon="user"
           />
         ) : (

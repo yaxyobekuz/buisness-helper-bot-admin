@@ -28,3 +28,31 @@ export async function updateApplicationStatusAction(prevState, formData) {
 
   return { success: 'Holat yangilandi' };
 }
+
+async function mutate(path, method, paths) {
+  try {
+    await apiFetch(path, { method });
+  } catch (error) {
+    return { error: toMessage(error) };
+  }
+
+  for (const target of paths) revalidatePath(target);
+
+  return { success: true };
+}
+
+export async function deleteApplicationAction(id) {
+  return mutate(`/applications/${id}`, 'DELETE', ['/arizalar', `/arizalar/${id}`, '/tadbirkorlar', '/']);
+}
+
+export async function restoreApplicationAction(id) {
+  return mutate(`/applications/${id}/restore`, 'POST', ['/arizalar', `/arizalar/${id}`, '/tadbirkorlar', '/']);
+}
+
+export async function deleteEntrepreneurAction(id) {
+  return mutate(`/entrepreneurs/${id}`, 'DELETE', ['/tadbirkorlar', `/tadbirkorlar/${id}`, '/arizalar', '/']);
+}
+
+export async function restoreEntrepreneurAction(id) {
+  return mutate(`/entrepreneurs/${id}/restore`, 'POST', ['/tadbirkorlar', `/tadbirkorlar/${id}`, '/arizalar', '/']);
+}
