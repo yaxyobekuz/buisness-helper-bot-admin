@@ -14,7 +14,7 @@ export function LoginForm() {
     <div className="w-full max-w-sm">
       <div className="mb-8 flex flex-col items-center text-center">
         <Image src="/logo.svg" alt="" width={64} height={64} unoptimized />
-        <h1 className="mt-4 text-xl font-semibold text-slate-900">Admin panel</h1>
+        <h1 className="mt-4 text-xl font-semibold text-slate-900">Tadbirkorga ko'mak</h1>
         <p className="mt-1 text-sm text-slate-500">Davom etish uchun tizimga kiring</p>
       </div>
 

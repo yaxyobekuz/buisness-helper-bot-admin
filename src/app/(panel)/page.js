@@ -17,21 +17,9 @@ export default async function DashboardPage() {
     <>
       <PageHeader title="Bosh sahifa" />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <StatCard label="Jami arizalar" value={stats.totals.applications} icon="document" />
-        <StatCard label="Tashkilotlar" value={stats.totals.organizations} icon="building" />
-        <StatCard
-          label="Faol yo'nalishlar"
-          value={stats.totals.activeDirections}
-          icon="settings"
-          hint={`Jami ${stats.totals.directions} ta`}
-        />
-        <StatCard
-          label="Yangi yo'nalishlar"
-          value={stats.totals.newDirections}
-          icon="clock"
-          hint="Tasdiqlash kutilmoqda"
-        />
+        <StatCard label="Tadbirkorlar" value={stats.totals.entrepreneurs} icon="user" />
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
@@ -51,38 +39,8 @@ export default async function DashboardPage() {
         ))}
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <DailyChart data={stats.daily} />
-        </div>
-
-        <div className="card p-5">
-          <h2 className="mb-4 font-semibold text-slate-900">Ko'p murojaat qilingan yo'nalishlar</h2>
-          {stats.byDirection.length === 0 ? (
-            <p className="text-sm text-slate-500">Hozircha ma'lumot yo'q.</p>
-          ) : (
-            <ul className="space-y-3">
-              {stats.byDirection.map((item) => {
-                const max = stats.byDirection[0].count || 1;
-
-                return (
-                  <li key={item.name}>
-                    <div className="mb-1 flex items-baseline justify-between gap-2">
-                      <span className="truncate text-sm text-slate-700">{item.name}</span>
-                      <span className="text-sm font-medium text-slate-900">{item.count}</span>
-                    </div>
-                    <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
-                      <div
-                        className="h-full rounded-full bg-brand-600"
-                        style={{ width: `${(item.count / max) * 100}%` }}
-                      />
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
+      <div className="mt-4">
+        <DailyChart data={stats.daily} />
       </div>
 
       <div className="card mt-4">
@@ -105,8 +63,8 @@ export default async function DashboardPage() {
                 >
                   <span className="w-12 shrink-0 text-sm font-semibold text-slate-400">#{item.number}</span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium text-slate-900">{item.direction ?? '—'}</p>
-                    <p className="truncate text-sm text-slate-500">{item.organization ?? '—'}</p>
+                    <p className="truncate text-sm font-medium text-slate-900">{item.fullName ?? '—'}</p>
+                    <p className="truncate text-sm text-slate-500">{item.content}</p>
                   </div>
                   <span className="hidden text-sm text-slate-400 sm:block">{formatDateTime(item.createdAt)}</span>
                   <StatusBadge status={item.status} />

@@ -34,7 +34,7 @@ export function Sidebar({ adminName, logoutAction }) {
           </svg>
         </button>
         <Image src="/logo.svg" alt="" width={28} height={28} unoptimized />
-        <span className="font-semibold text-slate-900">Admin panel</span>
+        <span className="font-semibold text-slate-900">Tadbirkorga ko'mak</span>
       </header>
 
       {open ? (
@@ -53,7 +53,7 @@ export function Sidebar({ adminName, logoutAction }) {
       >
         <div className="flex items-center gap-3 px-5 py-5">
           <Image src="/logo.svg" alt="" width={40} height={40} unoptimized className="shrink-0" />
-          <p className="min-w-0 truncate text-sm font-semibold text-white">Admin panel</p>
+          <p className="min-w-0 truncate text-sm font-semibold text-white">Tadbirkorga ko'mak</p>
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-2">

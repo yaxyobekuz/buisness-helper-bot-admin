@@ -9,7 +9,7 @@ import { SearchField } from '@/components/search-field';
 import { StatusBadge } from '@/components/status-badge';
 import { apiFetchPage } from '@/lib/api';
 import { APPLICATION_STATUSES } from '@/lib/constants';
-import { formatDateTime } from '@/lib/format';
+import { formatDateTime, formatPhone } from '@/lib/format';
 
 export const metadata = { title: 'Arizalar' };
 
@@ -29,7 +29,7 @@ export default async function ApplicationsPage({ searchParams }) {
 
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <FilterTabs name="status" options={APPLICATION_STATUSES} />
-        <SearchField placeholder="Raqam yoki matn bo'yicha..." />
+        <SearchField placeholder="Raqam, F.I.Sh., telefon..." />
       </div>
 
       <div className="card overflow-hidden">
@@ -45,8 +45,8 @@ export default async function ApplicationsPage({ searchParams }) {
                 <thead className="bg-brand-900 text-xs tracking-wide text-white uppercase">
                   <tr>
                     <th className="px-4 py-3 font-medium">№</th>
-                    <th className="px-4 py-3 font-medium">Yo'nalish</th>
-                    <th className="px-4 py-3 font-medium">Tashkilot</th>
+                    <th className="px-4 py-3 font-medium">F.I.Sh.</th>
+                    <th className="px-4 py-3 font-medium">Telefon</th>
                     <th className="px-4 py-3 font-medium">Mazmuni</th>
                     <th className="px-4 py-3 font-medium">Sana</th>
                     <th className="px-4 py-3 font-medium">Holat</th>
@@ -60,11 +60,9 @@ export default async function ApplicationsPage({ searchParams }) {
                           #{item.number}
                         </Link>
                       </td>
-                      <td className="px-4 py-3 font-medium text-slate-900">
-                        {item.direction?.name ?? '—'}
-                      </td>
-                      <td className="px-4 py-3 text-slate-600">
-                        {item.user?.organizationName ?? '—'}
+                      <td className="px-4 py-3 font-medium text-slate-900">{item.fullName ?? '—'}</td>
+                      <td className="px-4 py-3 whitespace-nowrap text-slate-600">
+                        {formatPhone(item.phone)}
                       </td>
                       <td className="max-w-xs truncate px-4 py-3 text-slate-600">{item.content}</td>
                       <td className="px-4 py-3 whitespace-nowrap text-slate-500">

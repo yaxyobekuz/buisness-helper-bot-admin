@@ -2,8 +2,8 @@ import './globals.css';
 
 export const metadata = {
   title: {
-    default: 'Admin panel',
-    template: '%s — Admin panel',
+    default: "Tadbirkorga ko'mak",
+    template: "%s — Tadbirkorga ko'mak",
   },
   description: 'Murojaatlar boshqaruv paneli',
   icons: { icon: '/logo.svg' },

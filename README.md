@@ -1,8 +1,10 @@
-# buisness-helper-bot-admin
+# Tadbirkorga ko'mak — admin panel
 
-Telegram bot uchun admin panel. Next.js 16 (App Router) + Tailwind CSS 4.
+npm paketi: `tadbirkorga-komak-admin`
 
-Server alohida loyiha — `buisness-helper-bot-server`.
+Tadbirkorga ko'mak loyihasining boshqaruv paneli. Next.js 16 (App Router) + Tailwind CSS 4.
+
+Server alohida loyiha — `tadbirkorga-komak-server`.
 
 ## Ishga tushirish
 
@@ -26,10 +28,9 @@ Ularni **Profil** sahifasidan o'zgartirish mumkin.
 | `/login` | Kirish |
 | `/` | Bosh sahifa — statistika, grafik, so'nggi arizalar |
 | `/arizalar` | Arizalar ro'yxati — holat filtri, qidiruv, sahifalash |
-| `/arizalar/[id]` | Ariza tafsiloti — fayllar, tashkilot, holatni o'zgartirish |
-| `/tashkilotlar` | Tashkilotlar ro'yxati — qidiruv (faqat ko'rish) |
-| `/tashkilotlar/[id]` | Tashkilot ma'lumotlari va uning arizalari |
-| `/sozlamalar` | Yo'nalishlar — qo'shish, nomini va holatini o'zgartirish |
+| `/arizalar/[id]` | Ariza tafsiloti — tadbirkor, holatni o'zgartirish |
+| `/tadbirkorlar` | Tadbirkorlar ro'yxati — qidiruv (faqat ko'rish) |
+| `/tadbirkorlar/[id]` | Tadbirkor ma'lumotlari va uning arizalari |
 | `/profil` | Login, F.I.Sh. va parolni o'zgartirish |
 
 Ichki sahifalarning barchasida breadcrumb bor.
@@ -65,10 +66,3 @@ Logotip: `public/logo.svg`. **Hozir vaqtinchalik belgi turibdi** —
 prokuratura gerbini shu faylga (yoki `logo.png` qilib) qo'ying. Boshqa
 formatdan foydalansangiz `src/components/sidebar.jsx` va
 `src/components/login-form.jsx` dagi `/logo.svg` yo'lini almashtiring.
-
-## Yo'nalishlar haqida
-
-Botda faqat `Faol` yo'nalishlar ko'rsatiladi. Foydalanuvchi ro'yxatda yo'q
-yo'nalish kiritsa, u `Yangi` holatda qo'shiladi — Sozlamalar sahifasidan
-`Faol` qilmaguningizcha botda ko'rinmaydi. Panel orqali qo'shilgan
-yo'nalish darhol `Faol` bo'ladi.

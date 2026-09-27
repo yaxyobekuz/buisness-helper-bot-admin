@@ -8,25 +8,33 @@ import { StatusBadge } from '@/components/status-badge';
 import { ApiRequestError, apiFetchPage } from '@/lib/api';
 import { formatDate, formatDateTime, formatPhone } from '@/lib/format';
 
+function displayName(entrepreneur) {
+  return (
+    entrepreneur.fullName ||
+    [entrepreneur.firstName, entrepreneur.lastName].filter(Boolean).join(' ') ||
+    'Tadbirkor'
+  );
+}
+
 export async function generateMetadata({ params }) {
   const { id } = await params;
 
   try {
-    const data = await apiFetchPage(`/organizations/${id}`);
+    const data = await apiFetchPage(`/entrepreneurs/${id}`);
 
-    return { title: data.item.organizationName ?? 'Tashkilot' };
+    return { title: displayName(data.item) };
   } catch {
-    return { title: 'Tashkilot' };
+    return { title: 'Tadbirkor' };
   }
 }
 
-export default async function OrganizationDetailPage({ params }) {
+export default async function EntrepreneurDetailPage({ params }) {
   const { id } = await params;
 
   let data;
 
   try {
-    data = await apiFetchPage(`/organizations/${id}`);
+    data = await apiFetchPage(`/entrepreneurs/${id}`);
   } catch (error) {
     if (error instanceof ApiRequestError && (error.status === 404 || error.status === 400)) {
       notFound();
@@ -35,31 +43,34 @@ export default async function OrganizationDetailPage({ params }) {
     throw error;
   }
 
-  const organization = data.item;
+  const entrepreneur = data.item;
 
   return (
     <>
       <Breadcrumbs
-        items={[
-          { label: 'Tashkilotlar', href: '/tashkilotlar' },
-          { label: organization.organizationName ?? 'Tashkilot' },
-        ]}
+        items={[{ label: 'Tadbirkorlar', href: '/tadbirkorlar' }, { label: displayName(entrepreneur) }]}
       />
 
-      <PageHeader title={organization.organizationName ?? 'Tashkilot'} />
+      <PageHeader title={displayName(entrepreneur)} />
 
       <div className="grid gap-4 lg:grid-cols-3">
         <section className="card p-5">
           <h2 className="mb-4 font-semibold text-slate-900">Ma'lumotlar</h2>
           <dl className="space-y-3 text-sm">
-            <Row label="Faoliyat turi" value={organization.activityType} />
-            <Row label="Rahbar" value={organization.directorFullName} />
-            <Row label="INN" value={organization.inn} />
-            <Row label="Telefon" value={formatPhone(organization.phone)} />
-            <Row label="Manzil" value={organization.address} />
-            <Row label="Telegram" value={organization.username ? `@${organization.username}` : null} />
-            <Row label="Ro'yxatdan o'tgan" value={formatDate(organization.createdAt)} />
+            <Row label="F.I.Sh." value={entrepreneur.fullName} />
+            <Row label="Telefon" value={formatPhone(entrepreneur.phone)} />
+            <Row label="Manzil" value={entrepreneur.address} />
+            <Row
+              label="Telegram"
+              value={[entrepreneur.firstName, entrepreneur.lastName].filter(Boolean).join(' ')}
+            />
+            <Row label="Username" value={entrepreneur.username ? `@${entrepreneur.username}` : null} />
+            <Row label="Telegram ID" value={entrepreneur.telegramId} />
+            <Row label="Qo'shilgan" value={formatDate(entrepreneur.createdAt)} />
           </dl>
+          <p className="mt-4 text-xs text-slate-400">
+            F.I.Sh., telefon va manzil oxirgi arizadagi ma'lumotlardan olinadi.
+          </p>
         </section>
 
         <div className="card overflow-hidden lg:col-span-2">
@@ -73,7 +84,7 @@ export default async function OrganizationDetailPage({ params }) {
           </div>
 
           {data.applications.length === 0 ? (
-            <EmptyState title="Ariza yo'q" description="Bu tashkilot hali ariza yubormagan." />
+            <EmptyState title="Ariza yo'q" description="Bu tadbirkor hali ariza yubormagan." />
           ) : (
             <ul className="divide-y divide-slate-100">
               {data.applications.map((item) => (
@@ -84,9 +95,7 @@ export default async function OrganizationDetailPage({ params }) {
                   >
                     <span className="w-12 shrink-0 text-sm font-semibold text-slate-400">#{item.number}</span>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium text-slate-900">
-                        {item.direction?.name ?? '—'}
-                      </p>
+                      <p className="truncate text-sm font-medium text-slate-900">{item.fullName}</p>
                       <p className="truncate text-sm text-slate-500">{item.content}</p>
                     </div>
                     <span className="hidden text-sm text-slate-400 sm:block">

@@ -1,8 +1,8 @@
 {
-  "name": "buisness-helper-bot-admin",
+  "name": "tadbirkorga-komak-admin",
   "version": "1.0.0",
   "private": true,
-  "description": "Next.js admin panel",
+  "description": "Tadbirkorga ko'mak — admin panel",
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
