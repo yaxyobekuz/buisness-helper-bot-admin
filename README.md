@@ -73,3 +73,13 @@ Arizalar va tadbirkorlar butunlay o'chirilmaydi — "Faol / O'chirilgan"
 almashtirgichi orqali o'chirilganlarni ko'rish va tiklash mumkin.
 Tadbirkor o'chirilsa arizalari ham yashiriladi; tiklanganda birga qaytadi.
 Batafsil qoidalar server README sida.
+
+## Excelga yuklash
+
+Arizalar va Tadbirkorlar sahifalaridagi «Excelga yuklash» tugmasi modal
+ochadi: holat, ko'rinish (faol / o'chirilgan / hammasi) va sana oralig'i.
+Filtrlar bo'sh qolsa barchasi yuklanadi.
+
+Fayl `/api/export/arizalar` va `/api/export/tadbirkorlar` route handlerlari
+orqali oqadi — ular cookie dagi tokenni o'qib serverga uzatadi, shuning
+uchun token brauzerga chiqmaydi.

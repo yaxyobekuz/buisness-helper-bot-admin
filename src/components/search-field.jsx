@@ -17,6 +17,11 @@ export function SearchField({ placeholder = 'Qidirish...' }) {
   const [value, setValue] = useState(searchParams.get('search') ?? '');
 
   useEffect(() => {
+    // Faqat foydalanuvchi yozganda URL o'zgaradi. Bu tekshiruvsiz effekt
+    // har qanday query o'zgarishida (masalan sahifa almashganda) ishga
+    // tushib, `page` ni o'chirib yuborardi — pagination 1-sahifaga qaytardi.
+    if (value === (searchParams.get('search') ?? '')) return undefined;
+
     const timer = setTimeout(() => {
       const params = new URLSearchParams(searchParams);
 
@@ -27,9 +32,7 @@ export function SearchField({ placeholder = 'Qidirish...' }) {
 
       const next = params.toString();
 
-      if (next !== searchParams.toString()) {
-        router.replace(next ? `${pathname}?${next}` : pathname);
-      }
+      router.replace(next ? `${pathname}?${next}` : pathname);
     }, 350);
 
     return () => clearTimeout(timer);

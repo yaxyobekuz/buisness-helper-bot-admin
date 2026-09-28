@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { ClickableRow } from '@/components/clickable-row';
 import { EmptyState } from '@/components/empty-state';
+import { ExportDialog } from '@/components/export-dialog';
 import { PageHeader } from '@/components/page-header';
 import { Pagination } from '@/components/pagination';
 import { SearchField } from '@/components/search-field';
@@ -23,7 +24,9 @@ export default async function EntrepreneursPage({ searchParams }) {
 
   return (
     <>
-      <PageHeader title="Tadbirkorlar" />
+      <PageHeader title="Tadbirkorlar">
+        <ExportDialog endpoint="/api/export/tadbirkorlar" title="Tadbirkorlarni Excelga yuklash" />
+      </PageHeader>
 
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <ViewToggle />

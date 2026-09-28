@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { ClickableRow } from '@/components/clickable-row';
 import { EmptyState } from '@/components/empty-state';
+import { ExportDialog } from '@/components/export-dialog';
 import { FilterTabs } from '@/components/filter-tabs';
 import { PageHeader } from '@/components/page-header';
 import { Pagination } from '@/components/pagination';
@@ -27,7 +28,13 @@ export default async function ApplicationsPage({ searchParams }) {
 
   return (
     <>
-      <PageHeader title="Arizalar" />
+      <PageHeader title="Arizalar">
+        <ExportDialog
+          endpoint="/api/export/arizalar"
+          title="Arizalarni Excelga yuklash"
+          statuses={APPLICATION_STATUSES}
+        />
+      </PageHeader>
 
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
