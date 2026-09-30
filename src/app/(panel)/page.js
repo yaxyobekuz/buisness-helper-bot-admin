@@ -18,8 +18,26 @@ export default async function DashboardPage() {
       <PageHeader title="Bosh sahifa" />
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <StatCard label="Jami arizalar" value={stats.totals.applications} icon="document" />
-        <StatCard label="Tadbirkorlar" value={stats.totals.entrepreneurs} icon="user" />
+        <StatCard
+          label="Faol arizalar"
+          value={stats.totals.applications}
+          icon="document"
+          hint={
+            stats.totals.deletedApplications
+              ? `${stats.totals.deletedApplications} ta o'chirilgan`
+              : undefined
+          }
+        />
+        <StatCard
+          label="Tadbirkorlar"
+          value={stats.totals.entrepreneurs}
+          icon="user"
+          hint={
+            stats.totals.deletedEntrepreneurs
+              ? `${stats.totals.deletedEntrepreneurs} ta o'chirilgan`
+              : undefined
+          }
+        />
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">

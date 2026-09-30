@@ -2,8 +2,13 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-/** "Faol" / "O'chirilgan" ko'rinishini almashtiradi. */
-export function ViewToggle() {
+/**
+ * "Faol" / "O'chirilgan" ko'rinishini almashtiradi va har birining
+ * sonini ko'rsatadi — o'tmasdan turib nechtaligi bilinadi.
+ *
+ * @param {{ counts?: { active: number, deleted: number } }} props
+ */
+export function ViewToggle({ counts }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -24,8 +29,8 @@ export function ViewToggle() {
   return (
     <div className="flex gap-1 rounded-lg bg-slate-100 p-1">
       {[
-        { value: false, label: 'Faol' },
-        { value: true, label: "O'chirilgan" },
+        { value: false, label: 'Faol', count: counts?.active },
+        { value: true, label: "O'chirilgan", count: counts?.deleted },
       ].map((item) => (
         <button
           key={item.label}
@@ -38,6 +43,15 @@ export function ViewToggle() {
           }`}
         >
           {item.label}
+          {typeof item.count === 'number' ? (
+            <span
+              className={`ml-1.5 text-xs ${
+                deleted === item.value ? 'text-brand-600' : 'text-slate-400'
+              }`}
+            >
+              {item.count}
+            </span>
+          ) : null}
         </button>
       ))}
     </div>

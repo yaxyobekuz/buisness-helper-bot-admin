@@ -29,7 +29,7 @@ export default async function EntrepreneursPage({ searchParams }) {
       </PageHeader>
 
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <ViewToggle />
+        <ViewToggle counts={data.counts} />
         <SearchField placeholder="F.I.Sh., username, telefon..." />
       </div>
 

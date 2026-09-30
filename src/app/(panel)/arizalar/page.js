@@ -39,7 +39,7 @@ export default async function ApplicationsPage({ searchParams }) {
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
           <FilterTabs name="status" options={APPLICATION_STATUSES} />
-          <ViewToggle />
+          <ViewToggle counts={data.counts} />
         </div>
         <SearchField placeholder="Raqam, F.I.Sh., telefon..." />
       </div>
